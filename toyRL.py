@@ -100,7 +100,8 @@ def visualize(robot_arm, dart_positions, target_position):
     # Create animation
     ani = FuncAnimation(fig, animate, frames=len(dart_positions), fargs=(robot_arm, dart_positions, line), 
                         interval=50, blit=True)
-    
+    print(plt.isinteractive)
+    input() 
     plt.show()
 
 
@@ -290,9 +291,9 @@ if __name__ == "__main__":
     num_iterations = 10000
     for i in range(num_iterations):
         policy_model = reinforce(arm, dart, policy_model, batch_size, true_traj, target_position)
-        
+
         # Visualize after some iterations
-        if i+1 % 1000 == 0:
+        if (i+1) % 1000 == 0:
             action_mean, _ = policy_forward(np.vstack(true_traj).flatten(), policy_model)
             print(action_mean)
             dart_trajectories, _, _, _ = sample_trajectory(arm, dart, policy_model, 1, true_traj, target_position)
